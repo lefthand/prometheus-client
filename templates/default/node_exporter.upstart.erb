@@ -1,0 +1,11 @@
+description "<%= @resource.service %>"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+console log
+
+exec <%= node.prometheus_client.install_dir%>/prometheus-node-exporter -collectors.enabled="<%= @resource.collectors %>" -web.listen-address=":<%= @resource.port %>"
+
+respawn
+respawn limit 3 180
