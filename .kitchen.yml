@@ -12,4 +12,9 @@ suites:
   - name: node_exporter
     run_list:
       - recipe[prometheus-client::node_exporter]
+      - recipe[prometheus-client::haproxy_exporter]
+    attributes:
+  - name: haproxy_exporter
+    run_list:
+      - recipe[prometheus-client::haproxy_exporter]
     attributes:

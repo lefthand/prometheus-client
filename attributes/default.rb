@@ -14,3 +14,11 @@ default.prometheus_client.node_exporter.collectors  = "diskstats,filesystem,load
 default.prometheus_client.node_exporter.port        = "9100"
 default.prometheus_client.node_exporter.service     = "prometheus-node-exporter"
 
+# -- HAProxy Exporter -- #
+
+default.prometheus_client.checksums.haproxy_exporter = {
+  "linux.amd64" => "7e389696678110f83e8332ed4f3e7baa04d0c422ccbedb0ccdbcdc4b13a56c68"
+}
+
+default.prometheus_client.haproxy_exporter.port     = "9101"
+default.prometheus_client.haproxy_exporter.service  = "prometheus-haproxy-exporter"

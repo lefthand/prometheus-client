@@ -7,16 +7,16 @@ action :install do
     supports  [:start,:stop,:restart,:enable,:disable]
   end
 
-  remote_file "#{node.prometheus_client.install_dir}/prometheus-node-exporter" do
-    source    "#{node.prometheus_client.binary_path}/node_exporter.#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"
-    checksum  node.prometheus_client.node_exporter["#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"]
+  remote_file "#{node.prometheus_client.install_dir}/prometheus-haproxy-exporter" do
+    source    "#{node.prometheus_client.binary_path}/haproxy_exporter.#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"
+    checksum  node.prometheus_client.haproxy_exporter["#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"]
     mode      0755
     notifies  :restart, "service[#{new_resource.service}]"
   end
 
   template "/etc/init/#{new_resource.service}.conf" do
     action    :create
-    source    "node_exporter.upstart.erb"
+    source    "haproxy_exporter.upstart.erb"
     cookbook  "prometheus-client"
     variables({
       resource:   new_resource
