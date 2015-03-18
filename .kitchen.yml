@@ -9,12 +9,9 @@ platforms:
   - name: ubuntu-12.04
 
 suites:
-  - name: node_exporter
+  - name: default
     run_list:
       - recipe[prometheus-client::node_exporter]
       - recipe[prometheus-client::haproxy_exporter]
-    attributes:
-  - name: haproxy_exporter
-    run_list:
-      - recipe[prometheus-client::haproxy_exporter]
+      - recipe[prometheus-client::consul_exporter]
     attributes:

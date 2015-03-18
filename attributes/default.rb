@@ -22,3 +22,13 @@ default.prometheus_client.checksums.haproxy_exporter = {
 
 default.prometheus_client.haproxy_exporter.port     = "9101"
 default.prometheus_client.haproxy_exporter.service  = "prometheus-haproxy-exporter"
+
+# -- Consul Exporter -- #
+
+default.prometheus_client.checksums.consul_exporter = {
+  "linux.amd64" => "23d8d850ed74c596b9713ec41f882b2d598cab55924cd11316fe4a187053c814"
+}
+
+default.prometheus_client.consul_exporter.port     = "9105"
+default.prometheus_client.consul_exporter.service  = "prometheus-consul-exporter"
+
