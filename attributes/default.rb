@@ -10,7 +10,7 @@ default.prometheus_client.checksums.node_exporter = {
   "linux.amd64" => "52c57bcbe8a17b18479a045f5bea21cdaff44b920d80e8c3d5afda6f9f165c19"
 }
 
-default.prometheus_client.node_exporter.collectors  = "diskstats,filesystem,loadavg,meminfo,textfile,time,netdev,netstat"
+default.prometheus_client.node_exporter.collectors  = "diskstats,filesystem,loadavg,meminfo,textfile,time,netdev,netstat,stat"
 default.prometheus_client.node_exporter.port        = "9100"
 default.prometheus_client.node_exporter.service     = "prometheus-node-exporter"
 
