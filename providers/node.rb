@@ -1,12 +1,6 @@
 use_inline_resources
 
 action :install do
-  service new_resource.service do
-    action    :nothing
-    provider  Chef::Provider::Service::Upstart
-    supports  [:start,:stop,:restart,:enable,:disable]
-  end
-
   remote_file "#{node.prometheus_client.install_dir}/prometheus-node-exporter" do
     source    "#{node.prometheus_client.binary_path}/prometheus-node_exporter.#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"
     checksum  node.prometheus_client.node_exporter["#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"]
@@ -21,10 +15,14 @@ action :install do
     variables({
       resource:   new_resource
     })
-    notifies :enable, "service[#{new_resource.service}]"
-    notifies :start,  "service[#{new_resource.service}]"
+    notifies :restart, "service[#{new_resource.service}]"
   end
 
+  service new_resource.service do
+    action    [:enable,:start]
+    provider  Chef::Provider::Service::Upstart
+    supports  [:start,:stop,:restart,:enable,:disable]
+  end
 end
 
 #----------

@@ -32,3 +32,11 @@ default.prometheus_client.checksums.consul_exporter = {
 default.prometheus_client.consul_exporter.port     = "9105"
 default.prometheus_client.consul_exporter.service  = "prometheus-consul-exporter"
 
+# -- Elasticsearch Exporter -- #
+
+default.prometheus_client.checksums.elasticsearch_exporter = {
+  "linux.amd64" => "74fe3a8fe0b63248c64ff19b7ab0bc01539cbba28cc16fdb829bc370fbe77a72"
+}
+
+default.prometheus_client.elasticsearch_exporter.port     = "9106"
+default.prometheus_client.elasticsearch_exporter.service  = "prometheus-elasticsearch-exporter"
