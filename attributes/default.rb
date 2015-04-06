@@ -7,7 +7,7 @@ default.prometheus_client.binary_path = "https://s3-us-west-2.amazonaws.com/scpr
 # -- Node Exporter -- #
 
 default.prometheus_client.checksums.node_exporter = {
-  "linux.amd64" => "52c57bcbe8a17b18479a045f5bea21cdaff44b920d80e8c3d5afda6f9f165c19"
+  "linux.amd64" => "3898bfdcdfdbcaec7c5c3e0e5f26dad1c8554703a258d9a6d3400471847aa85b"
 }
 
 default.prometheus_client.node_exporter.collectors  = "diskstats,filesystem,loadavg,meminfo,textfile,time,netdev,netstat,stat"
