@@ -8,12 +8,22 @@ action :install do
     notifies  :restart, "service[#{new_resource.service}]"
   end
 
+  options = {
+    "collectors.enabled" => new_resource.collectors,
+    "web.listen-address" => ":#{new_resource.port}",
+  }
+
+  if new_resource.file_path
+    options["collector.textfile.directory"] = new_resource.file_path
+  end
+
   template "/etc/init/#{new_resource.service}.conf" do
     action    :create
     source    "node_exporter.upstart.erb"
     cookbook  "prometheus-client"
     variables({
-      resource:   new_resource
+      resource:   new_resource,
+      options:    options,
     })
     notifies :restart, "service[#{new_resource.service}]"
   end

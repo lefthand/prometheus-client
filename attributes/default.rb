@@ -4,6 +4,10 @@ default.prometheus_client.install_dir   = "/usr/bin"
 
 default.prometheus_client.binary_path = "https://s3-us-west-2.amazonaws.com/scpr-binaries"
 
+# -- Chef Handler Options -- #
+
+default.prometheus_client.chef_handler.type       = "file"
+
 # -- Node Exporter -- #
 
 default.prometheus_client.checksums.node_exporter = {
@@ -13,6 +17,7 @@ default.prometheus_client.checksums.node_exporter = {
 default.prometheus_client.node_exporter.collectors  = "diskstats,filesystem,loadavg,meminfo,textfile,time,netdev,netstat,stat"
 default.prometheus_client.node_exporter.port        = "9100"
 default.prometheus_client.node_exporter.service     = "prometheus-node-exporter"
+default.prometheus_client.node_exporter.file_path   = "/var/run/prometheus/"
 
 # -- HAProxy Exporter -- #
 
