@@ -18,7 +18,7 @@ action :install do
     checksum = new_resource.checksums[version_os_arch]
   end
 
-  tarball "#{Chef::Config[:file_cache_path]}/#{file}" do
+  tarball_x "#{Chef::Config[:file_cache_path]}/#{file}" do
     destination "#{new_resource.install_dir}"
     owner "root"
     group "root"
@@ -32,7 +32,7 @@ action :install do
       checksum checksum
     end
     mode      0644
-    notifies :extract, "tarball[#{Chef::Config[:file_cache_path]}/#{file}]"
+    notifies :extract, "tarball_x[#{Chef::Config[:file_cache_path]}/#{file}]"
   end
 
   template "/etc/init/#{service}.conf" do

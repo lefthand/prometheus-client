@@ -4,7 +4,7 @@ maintainer_email 'erichardson@scpr.org'
 license          'apache2'
 description      'Installs Prometheus client handlers'
 long_description 'Installs Prometheus client handlers'
-version          '0.2.0'
+version          '0.2.1'
 
 depends "chef_handler"
 depends "tarball"
