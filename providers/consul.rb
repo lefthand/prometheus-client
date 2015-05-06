@@ -1,30 +1,13 @@
 use_inline_resources
 
 action :install do
-  service new_resource.service do
-    action    :nothing
-    provider  Chef::Provider::Service::Upstart
-    supports  [:start,:stop,:restart,:enable,:disable]
+  prometheus_client_exporter "consul_exporter" do
+    action      :install
+    binary_url  "https://github.com/prometheus/consul_exporter/releases/download/#{node.prometheus_client.consul_exporter.version}"
+    checksums   node.prometheus_client.consul_exporter.checksums
+    version     node.prometheus_client.consul_exporter.version
+    arguments   %Q!-consul.server="#{new_resource.server}" -web.listen-address=":#{new_resource.port}"!
   end
-
-  remote_file "#{node.prometheus_client.install_dir}/prometheus-consul-exporter" do
-    source    "#{node.prometheus_client.binary_path}/prometheus-consul_exporter.#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"
-    checksum  node.prometheus_client.consul_exporter["#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"]
-    mode      0755
-    notifies  :restart, "service[#{new_resource.service}]"
-  end
-
-  template "/etc/init/#{new_resource.service}.conf" do
-    action    :create
-    source    "consul_exporter.upstart.erb"
-    cookbook  "prometheus-client"
-    variables({
-      resource:   new_resource
-    })
-    notifies :enable, "service[#{new_resource.service}]"
-    notifies :start,  "service[#{new_resource.service}]"
-  end
-
 end
 
 #----------

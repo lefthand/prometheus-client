@@ -1,10 +1,10 @@
 name             'prometheus-client'
 maintainer       'Southern California Public Radio'
 maintainer_email 'erichardson@scpr.org'
-license          'BSD'
-description      'Installs/Configures prometheus-client'
-long_description 'Installs/Configures prometheus-client'
-version          '0.1.14'
+license          'apache2'
+description      'Installs Prometheus client handlers'
+long_description 'Installs Prometheus client handlers'
+version          '0.2.0'
 
 depends "chef_handler"
-
+depends "tarball"

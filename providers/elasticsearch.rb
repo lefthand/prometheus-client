@@ -1,30 +1,18 @@
 use_inline_resources
 
 action :install do
-  service new_resource.service do
-    action    :nothing
-    provider  Chef::Provider::Service::Upstart
-    supports  [:start,:stop,:restart,:enable,:disable]
-  end
+  options = {
+    "es.uri"              => new_resource.server,
+    "web.listen-address"  => ":#{new_resource.port}"
+  }
 
-  remote_file "#{node.prometheus_client.install_dir}/prometheus-elasticsearch-exporter" do
-    source    "#{node.prometheus_client.binary_path}/prometheus-elasticsearch_exporter.#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"
-    checksum  node.prometheus_client.elasticsearch_exporter["#{node.prometheus_client.os}.#{node.prometheus_client.cpu_arch}"]
-    mode      0755
-    notifies  :restart, "service[#{new_resource.service}]"
+  prometheus_client_exporter "elasticsearch_exporter" do
+    action      :install
+    binary_url  "https://github.com/ewr/elasticsearch_exporter/releases/download/v#{node.prometheus_client.elasticsearch_exporter.version}"
+    checksums   node.prometheus_client.elasticsearch_exporter.checksums
+    version     node.prometheus_client.elasticsearch_exporter.version
+    arguments   options.map { |k,v| "-#{k}='#{v}'" }.join(' ')
   end
-
-  template "/etc/init/#{new_resource.service}.conf" do
-    action    :create
-    source    "elasticsearch_exporter.upstart.erb"
-    cookbook  "prometheus-client"
-    variables({
-      resource:   new_resource
-    })
-    notifies :enable, "service[#{new_resource.service}]"
-    notifies :start,  "service[#{new_resource.service}]"
-  end
-
 end
 
 #----------
