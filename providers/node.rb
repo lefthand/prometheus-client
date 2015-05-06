@@ -17,6 +17,7 @@ action :install do
 
   prometheus_client_exporter "node_exporter" do
     action      :install
+    service     new_resource.service
     binary_url  "https://github.com/prometheus/node_exporter/releases/download/#{node.prometheus_client.node_exporter.version}"
     checksums   node.prometheus_client.node_exporter.checksums
     version     node.prometheus_client.node_exporter.version
