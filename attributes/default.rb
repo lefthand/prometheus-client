@@ -62,11 +62,13 @@ default.prometheus_client.consul_exporter.service  = "prometheus-consul-exporter
 
 # -- Elasticsearch Exporter -- #
 
-default.prometheus_client.elasticsearch_exporter.version = "0.1.1"
+default.prometheus_client.elasticsearch_exporter.version = "0.2.0"
 
 default.prometheus_client.elasticsearch_exporter.checksums = {
   "0.1.1.darwin-amd64"  => "98862498936721841a4dac89890ca7af03ab1b95d7e893fed86b5e6358025e84",
   "0.1.1.linux-amd64"   => "09b3e5d15b4157f8ceeb38b747a4cda73500cd4c77c02116ca44c179d763c398",
+  "0.2.0.darwin-amd64"  => "2511b106d56c0123d1a6208a9283474224afbd9d68fe5c9c682dc12507d37461",
+  "0.2.0.linux-amd64"   => "042bd27fec12e9ead46d3e08c8f86856fb60574654f2bc9a456d63649f2f1b26",
 }
 
 default.prometheus_client.elasticsearch_exporter.port     = "9106"
