@@ -6,7 +6,8 @@ action :install do
 
   service service do
     action    :nothing
-    provider  Chef::Provider::Service::Upstart
+    provider Chef::Provider::Service::Upstart if node['platform'] == 'ubuntu' && node['platform_version'] >= '13.10'
+    provider Chef::Provider::Service::Systemd if node['platform'] == 'ubuntu' && node['platform_version'] >= '15.04'
     supports  [:start,:stop,:restart,:enable,:disable]
   end
 
