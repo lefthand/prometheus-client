@@ -1,0 +1,12 @@
+[Unit]
+Description=<%= @service %>
+
+[Service]
+KillMode=process
+Restart=on-failure
+RestartSec=2s
+ExecStart=<%= node.prometheus_client.install_dir%>/<%= @binary %> <%= @resource.arguments %>
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

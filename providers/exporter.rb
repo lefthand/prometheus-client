@@ -6,8 +6,6 @@ action :install do
 
   service service do
     action    :nothing
-    provider Chef::Provider::Service::Upstart if node['platform'] == 'ubuntu' && node['platform_version'] >= '13.10'
-    provider Chef::Provider::Service::Systemd if node['platform'] == 'ubuntu' && node['platform_version'] >= '15.04'
     supports  [:start,:stop,:restart,:enable,:disable]
   end
 
@@ -20,7 +18,7 @@ action :install do
   end
 
   tarball_x "#{Chef::Config[:file_cache_path]}/#{file}" do
-    destination "#{new_resource.install_dir}"
+    destination new_resource.install_dir
     owner "root"
     group "root"
     action :nothing
@@ -36,17 +34,32 @@ action :install do
     notifies :extract, "tarball_x[#{Chef::Config[:file_cache_path]}/#{file}]"
   end
 
-  template "/etc/init/#{service}.conf" do
-    action    :create
-    source    "exporter.upstart.erb"
-    cookbook  "prometheus-client"
-    variables({
-      resource:   new_resource,
-      service:    service,
-      binary:     binary,
-    })
-    notifies :enable, "service[#{service}]"
-    notifies :start,  "service[#{service}]"
+  if node['platform'] == 'ubuntu' && node['platform_version'] >= '15.04'
+    template "/lib/systemd/system/#{service}.service" do
+      action    :create
+      source    "exporter.systemd.erb"
+      cookbook  "prometheus-client"
+      variables({
+        resource:   new_resource,
+        service:    service,
+        binary:     binary,
+      })
+      notifies :enable, "service[#{service}]"
+      notifies :start,  "service[#{service}]"
+    end
+  else
+    template "/etc/init/#{service}.conf" do
+      action    :create
+      source    "exporter.upstart.erb"
+      cookbook  "prometheus-client"
+      variables({
+        resource:   new_resource,
+        service:    service,
+        binary:     binary,
+      })
+      notifies :enable, "service[#{service}]"
+      notifies :start,  "service[#{service}]"
+    end
   end
 
 end
